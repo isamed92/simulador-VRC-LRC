@@ -12,11 +12,16 @@ export const App = () => {
   const { obtenerValores, getVRC } = useDeteccion()
 
   const handleConvert = () => {
+    if(cadena === '') return
 
     const data = obtenerValores(cadena);
-    console.table(data)
+    // console.table(data)
     setParity(data);
-    const vrc = getVRC(data)
+    const bits = data.map(c => c.bit.split(''));
+    const parities = data.map(c => c.parity);
+    const wordvrc = getVRC(bits)
+    const parity = getVRC(parities)
+    const vrc = (wordvrc + parity).slice(0,8)
     setVrc(vrc)
 
 

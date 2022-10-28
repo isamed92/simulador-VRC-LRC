@@ -1,26 +1,6 @@
 import React from 'react';
 
 export const useDeteccion = () => {
-  const generar = (cadena = '', isEven = true, onLeft = false) => {
-    let bit = '';
-    let result = '';
-    if (cadena.length === 7) {
-      if (isEven) {
-        bit = isPair(counter(cad)) == true ? '0' : '1';
-      } else {
-        bit = isPair(counter(cad)) == true ? '1' : '0';
-      }
-    }
-    if (onLeft) {
-      result += bit;
-    } else {
-      result = bit + cadena;
-    }
-    return result.trim();
-  };
-
-
-
 
   const obtenerValores = (cadena) => {
     let aux = cadena.trim()
@@ -39,13 +19,34 @@ export const useDeteccion = () => {
   }
 
   const getVRC = (arr = []) => {
-    const bits = arr.map(c => c.bit);
-
     let vrc = ''
-    for (const bit of bits) {
-        vrc += bit.split('').filter( n => n === '1').length % 2 === 0 ? '0' : '1'
+    let  a1 = 0
+    let  a2 = 0
+    let  a3 = 0
+    let  a4 = 0
+    let  a5 = 0
+    let  a6 = 0
+    let  a7 = 0
+
+    for (let i = 0; i < arr.length; i++) {
+        a1 += arr[i][0] === '1' ? 1 : 0 
+        a2 += arr[i][1] === '1' ? 1 : 0 
+        a3 += arr[i][2] === '1' ? 1 : 0 
+        a4 += arr[i][3] === '1' ? 1 : 0 
+        a5 += arr[i][4] === '1' ? 1 : 0 
+        a6 += arr[i][5] === '1' ? 1 : 0 
+        a7 += arr[i][6] === '1' ? 1 : 0
     }
-    return vrc;
+    vrc = ((a1 % 2 === 0) ? '0' : '1' ) +
+    ((a2 % 2 === 0) ? '0' : '1' ) + 
+    ((a3 % 2 === 0) ? '0' : '1' ) + 
+    ((a4 % 2 === 0) ? '0' : '1' ) + 
+    ((a5 % 2 === 0) ? '0' : '1' ) + 
+    ((a6 % 2 === 0) ? '0' : '1' ) + 
+    ((a7 % 2 === 0) ? '0' : '1' ); 
+    
+    // return '0001010'
+    return vrc
   }
 
   return {
