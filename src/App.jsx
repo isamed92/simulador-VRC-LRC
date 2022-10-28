@@ -1,34 +1,62 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Header } from './components/header';
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export const App = () => {
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
-}
+    <>
+      <Header />
+      <div className="container">
+        <div className='captura_datos mt-5'>
+          <div className='input-group mb-3'>
+            <input
+              type='text'
+              className='form-control'
+              placeholder='Ingresar un mensaje'
+            />
+          </div>
+        </div>
 
-export default App
+        <div>
+          <h5>Generador VRC:</h5>
+          <div className='d-flex justify-content-between mb-3'>
+            <div className='fs-1'>10010110</div>
+            <button type="button" className="btn btn-danger">Siguiente</button>
+          </div>
+          <hr/>
+        </div>
+
+        <div>
+          <h5>Bits de paridad</h5>
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Character</th>
+                <th scope="col">7 bits</th>
+                <th scope="col">LRC</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>H</td>
+                <td>0101101</td>
+                <td className='fw-bold'>0</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+        <div className='mb-2'>
+          <h5>Generador LRC</h5>
+          <div className='fs-1 text-break alert alert-success'>1001011010010110100101101001011010010110100101101001011010010110</div>
+        </div>
+        <div>
+          <h5>Datos recibidos</h5>
+          <div className='fs-1 text-break alert alert-info'>HOLA</div>
+
+        </div>
+      </div>
+    </>
+  );
+}
