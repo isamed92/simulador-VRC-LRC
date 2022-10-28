@@ -7,6 +7,8 @@ export const App = () => {
 
   const [cadena, setCadena] = useState('')
   const [vrc, setVrc] = useState('')
+  const [lrc, setLrc] = useState('')
+  const [translate, setTranlaste] = useState('')
   const [parity, setParity] = useState([])
 
   const { obtenerValores, getVRC } = useDeteccion()
@@ -23,10 +25,19 @@ export const App = () => {
     const parity = getVRC(parities)
     const vrc = (wordvrc + parity).slice(0,8)
     setVrc(vrc)
+    const lrc = data.map(c => c.bit + c.parity).join(' ')
+    setLrc(lrc)
 
 
   }
 
+  const handleTranslate = () => {
+    const bin = lrc.split(' ').map(e => e.substring(0, 7))
+    const dec = bin.map(a => parseInt(a, 2))
+    const word = dec.map(c => String.fromCharCode(c)).join('') 
+    setTranlaste(word)
+
+  }
 
  
   return (
@@ -61,7 +72,7 @@ export const App = () => {
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Character</th>
-                <th scope="col">7 bits</th>
+                <th scope="col">ASCII (7 bits)</th>
                 <th scope="col">LRC</th>
               </tr>
             </thead>
@@ -87,12 +98,12 @@ export const App = () => {
         </div>
         <div className='mb-2'>
           <h5>Generador LRC</h5>
-          <div className='fs-3 text-break alert alert-success'>1001011010010110100101101001011010010110100101101001011010010110</div>
+          <div className='fs-3 text-break alert alert-success'>{lrc}</div>
+          { lrc &&  <button type="button" className="btn btn-info" onClick={handleTranslate}>Traducir</button>}
         </div>
         <div>
           <h5>Datos recibidos</h5>
-          <div className='fs-1 text-break alert alert-info'>HOLA</div>
-
+          <div className='fs-1 text-break alert alert-info'>{translate}</div>
         </div>
       </div>
     </>
