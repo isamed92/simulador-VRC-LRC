@@ -1,7 +1,29 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useState } from 'react';
 import { Header } from './components/header';
+import { useDeteccion } from './hooks/useDeteccion';
 
 export const App = () => {
+
+  const [cadena, setCadena] = useState('')
+  const [vrc, setVrc] = useState('')
+  const [parity, setParity] = useState([])
+
+  const { obtenerValores, getVRC } = useDeteccion()
+
+  const handleConvert = () => {
+
+    const data = obtenerValores(cadena);
+    console.table(data)
+    setParity(data);
+    const vrc = getVRC(data)
+    setVrc(vrc)
+
+
+  }
+
+
+ 
   return (
     <>
       <Header />
@@ -12,15 +34,17 @@ export const App = () => {
               type='text'
               className='form-control'
               placeholder='Ingresar un mensaje'
+              onChange={(e) => setCadena(e.target.value)}
+              value={cadena}
             />
           </div>
         </div>
 
         <div>
-          <h5>Generador VRC:</h5>
+          {/* <h5>Generador VRC:</h5> */}
           <div className='d-flex justify-content-between mb-3'>
-            <div className='fs-1'>10010110</div>
-            <button type="button" className="btn btn-danger">Siguiente</button>
+            {/* <div className='fs-1'>10010110</div> */}
+            <button type="button" className="btn btn-danger" onClick={handleConvert}>Convertir</button>
           </div>
           <hr/>
         </div>
@@ -37,19 +61,28 @@ export const App = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>H</td>
-                <td>0101101</td>
-                <td className='fw-bold'>0</td>
-              </tr>
+              {
+                parity.length > 0 &&
+                parity.map( (c, i) => (
+                      <tr key={i}>
+                        <th scope="row">{i + 1}</th>
+                        <td>{c.val}</td>
+                        <td className='bist'> {c.bit} </td>
+                        <td className='fw-bold'> {c.parity} </td>
+                      </tr>
+                ))
+              }
             </tbody>
           </table>
-
+        <div className='mb-2'>
+          <h5>VRC:</h5>
+          <div className='fs-3 text-break alert alert-info'>{vrc}</div>
+        </div>
+        <hr/>
         </div>
         <div className='mb-2'>
           <h5>Generador LRC</h5>
-          <div className='fs-1 text-break alert alert-success'>1001011010010110100101101001011010010110100101101001011010010110</div>
+          <div className='fs-3 text-break alert alert-success'>1001011010010110100101101001011010010110100101101001011010010110</div>
         </div>
         <div>
           <h5>Datos recibidos</h5>
